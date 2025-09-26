@@ -73,7 +73,6 @@ export default function ItemList() {
     category: "household",
   };
 
-  // ✅ Return the list of items
   return (
     <ul>
       <Item name={item1.name} quantity={item1.quantity} category={item1.category} />
