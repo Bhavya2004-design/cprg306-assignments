@@ -7,12 +7,10 @@ import itemsData from "./items.json";
 export default function ItemList() {
   const [sortBy, setSortBy] = useState("name");
   const [grouped, setGrouped] = useState(false);
-
-  // Sort helpers (don’t trim or lowercase names so emojis stay visible)
   const sortByName = (a, b) => a.name.localeCompare(b.name);
   const sortByCategory = (a, b) => a.category.localeCompare(b.category);
 
-  // Sort the data copy
+
   let sortedItems = [...itemsData];
   if (sortBy === "name") {
     sortedItems.sort(sortByName);
@@ -20,7 +18,6 @@ export default function ItemList() {
     sortedItems.sort(sortByCategory);
   }
 
-  // Group by category
   const groupedItems = sortedItems.reduce((acc, item) => {
     const cat = item.category;
     if (!acc[cat]) acc[cat] = [];
@@ -30,25 +27,24 @@ export default function ItemList() {
 
   const sortedCategoryKeys = Object.keys(groupedItems).sort();
 
-  // Shared button styling
-  const baseBtn =
-    "px-4 py-2 rounded-md font-semibold transition text-white hover:bg-yellow-500";
-
   return (
-    <div className="w-full max-w-lg mx-auto">
-      {/* Top control buttons */}
-      <div className="flex justify-center mb-6 space-x-3">
+    <div>
+      <div className="flex mb-7 gap-2">
         <button
           type="button"
           onClick={() => {
             setGrouped(false);
             setSortBy("name");
           }}
-          className={`${baseBtn} ${
-            sortBy === "name" && !grouped ? "bg-yellow-500" : "bg-gray-600"
+          className={`w-36 h-16 rounded-md font-bold transition text-white border-2 ${
+            sortBy === "name" && !grouped
+              ? "bg-yellow-500 border-black"
+              : "bg-gray-500 border-gray-500"
           }`}
         >
-          Sort by Name
+          Sort by
+          <br />
+          Name
         </button>
 
         <button
@@ -57,25 +53,34 @@ export default function ItemList() {
             setGrouped(false);
             setSortBy("category");
           }}
-          className={`${baseBtn} ${
-            sortBy === "category" && !grouped ? "bg-yellow-500" : "bg-gray-600"
+          className={`w-36 h-16 rounded-md font-bold transition text-white border-2 ${
+            sortBy === "category" && !grouped
+              ? "bg-yellow-500 border-black"
+              : "bg-gray-500 border-gray-500"
           }`}
         >
-          Sort by Category
+          Sort by
+          <br />
+          Category
         </button>
 
         <button
           type="button"
           onClick={() => setGrouped(true)}
-          className={`${baseBtn} ${grouped ? "bg-yellow-500" : "bg-gray-600"}`}
+          className={`w-36 h-16 rounded-md font-bold transition text-white border-2 ${
+            grouped
+              ? "bg-yellow-500 border-black"
+              : "bg-gray-500 border-gray-500"
+          }`}
         >
-          Group by Category
+          Group by
+          <br />
+          Category
         </button>
       </div>
 
-      {/* Display items */}
       {!grouped ? (
-        <ul>
+        <ul className="space-y-2">
           {sortedItems.map((item) => (
             <Item key={item.id} item={item} />
           ))}
@@ -83,11 +88,11 @@ export default function ItemList() {
       ) : (
         <div className="space-y-6">
           {sortedCategoryKeys.map((category) => (
-            <div key={category}>
+            <div key={category} className="bg-white rounded-md p-4">
               <h2 className="text-blue-500 font-bold text-lg mb-2 capitalize">
                 {category}
               </h2>
-              <ul>
+              <ul className="space-y-2">
                 {groupedItems[category].map((item) => (
                   <Item key={item.id} item={item} />
                 ))}
