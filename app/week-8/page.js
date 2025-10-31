@@ -13,43 +13,41 @@ export default function Page() {
   const handleAddItem = (newItem) => {
     const itemWithId = {
       id: Math.random().toString(36).substring(2, 9),
-      name: newItem.name,
-      quantity: newItem.quantity,
-      category: newItem.category,
+      ...newItem,
     };
     setItems((prevItems) => [...prevItems, itemWithId]);
   };
 
+    const cleanItemName = (name) => {
+  return name
+    .replace(/[^\p{L}\p{N}\s]/gu, "")  
+    .replace(/\d+(\s*(kg|g|l|ml|pack|packs|dozen))?/gi, "") 
+    .split(",")[0]                     
+    .trim()                            
+    .toLowerCase();                    
+};
+
   const handleItemSelect = (item) => {
-    if (!item || !item.name) return;
-    const cleanedName = item.name
-      .split(",")[0]
-      .trim()
-      .replace(
-        /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uFE0F)/g,
-        ""
-      )
-      .trim();
-    setSelectedItemName(cleanedName);
+    const cleaned = cleanItemName(item.name);
+    setSelectedItemName(cleaned);
   };
 
   return (
-    <main className="min-h-screen bg-white flex flex-col items-center py-10 px-4">
-      <h1 className="text-3xl font-bold text-black mb-8">
-        Shopping List + Meal Ideas
-      </h1>
-
-      <div className="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
-        <div className="flex-1">
-          <NewItem onAddItem={handleAddItem} />
-          <div className="mt-6">
-            <ItemList items={items} onItemSelect={handleItemSelect} />
-          </div>
+    <main className="min-h-screen bg-black flex flex-col md:flex-row justify-center items-start gap-10 py-10 px-4">
+      {/* Left: Shopping List + Form */}
+      <div className="w-full max-w-md">
+        <h1 className="text-4xl font-extrabold text-white mb-6">
+          Shopping List + Meal Ideas
+        </h1>
+        <NewItem onAddItem={handleAddItem} />
+        <div className="mt-8">
+          <ItemList items={items} onItemSelect={handleItemSelect} />
         </div>
+      </div>
 
-        <div className="flex-1">
-          <MealIdeas ingredient={selectedItemName} />
-        </div>
+      {/* Right: Meal Ideas */}
+      <div className="w-full max-w-md">
+        <MealIdeas ingredient={selectedItemName} />
       </div>
     </main>
   );

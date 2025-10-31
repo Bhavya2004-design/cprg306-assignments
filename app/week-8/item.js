@@ -7,7 +7,7 @@ export default function Item({ item, onSelect }) {
     >
       <h2 className="text-lg font-semibold">{name}</h2>
       <p className="text-sm text-gray-700">
-        Quantity: {quantity} <br /> Category: {category}
+         Buy {quantity} in {category}
       </p>
     </li>
   );

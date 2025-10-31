@@ -6,11 +6,12 @@ import Item from "./item";
 export default function ItemList({ items, onItemSelect }) {
   const [sortBy, setSortBy] = useState("name");
 
-  const sortedItems = [...items].sort((a, b) => {
-    return sortBy === "name"
-      ? a.name.localeCompare(b.name)
-      : a.category.localeCompare(b.category);
-  });
+  const sortByName = (a, b) => a.name.localeCompare(b.name);
+  const sortByCategory = (a, b) => a.category.localeCompare(b.category);
+
+  let sortedItems = [...items];
+  if (sortBy === "name") sortedItems.sort(sortByName);
+  else if (sortBy === "category") sortedItems.sort(sortByCategory);
 
   return (
     <div>
@@ -26,6 +27,7 @@ export default function ItemList({ items, onItemSelect }) {
         >
           Name
         </button>
+
         <button
           onClick={() => setSortBy("category")}
           className={`px-4 py-2 rounded-md font-semibold ${
