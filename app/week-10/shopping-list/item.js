@@ -1,15 +1,15 @@
 export default function Item({ item, onSelect }) {
   const { name, quantity, category } = item;
+
   return (
     <li
       onClick={() => onSelect(item)}
-      className="border rounded-md p-3 cursor-pointer hover:bg-gray-100"
+      className="bg-[#1e293b] text-white p-3 shadow rounded-md cursor-pointer hover:bg-[#334155] transition"
     >
-      <h2 className="text-lg font-semibold">{name}</h2>
-      <p className="text-sm text-gray-700">
-         Buy {quantity} in {category}
+      <h2 className="text-2xl font-bold">{name}</h2>
+      <p className="text-sm">
+        Buy {quantity} in {category}
       </p>
     </li>
   );
 }
-

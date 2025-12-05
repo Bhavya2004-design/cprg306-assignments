@@ -18,12 +18,15 @@ export default function NewItem({ onAddItem }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const item = {
-      id: Math.random().toString(36).substring(2, 9),
       name,
       quantity,
       category,
     };
-    onAddItem(item);
+
+    if (typeof onAddItem === "function") {  
+      onAddItem(item);
+    }
+
     setName("");
     setQuantity(1);
     setCategory("produce");
@@ -34,7 +37,6 @@ export default function NewItem({ onAddItem }) {
       onSubmit={handleSubmit}
       className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md border border-gray-200"
     >
-      {/* Item name */}
       <label className="block text-gray-800 font-semibold mb-1">Item Name</label>
       <input
         type="text"
@@ -45,7 +47,6 @@ export default function NewItem({ onAddItem }) {
         className="w-full border border-gray-300 rounded-md p-2 mb-4 text-gray-800 focus:ring-2 focus:ring-blue-400 focus:outline-none"
       />
 
-      {/* Quantity */}
       <label className="block text-gray-800 font-semibold mb-1">
         Quantity (1–20)
       </label>
@@ -81,7 +82,6 @@ export default function NewItem({ onAddItem }) {
         </button>
       </div>
 
-      {/* Category */}
       <label className="block text-gray-800 font-semibold mb-1">Category</label>
       <select
         value={category}
@@ -101,7 +101,6 @@ export default function NewItem({ onAddItem }) {
         <option value="other">Other</option>
       </select>
 
-      {/* Submit button */}
       <button
         type="submit"
         className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md transition"
