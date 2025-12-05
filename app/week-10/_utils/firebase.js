@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
- apiKey: "AIzaSyA6t9JUtoH1Tk1WJRnr_eOt7uhBuoZ0d8w",
+  apiKey: "AIzaSyA6t9JUtoH1Tk1WJRnr_eOt7uhBuoZ0d8w",
   authDomain: "cprg306-assignments-2c9df.firebaseapp.com",
   projectId: "cprg306-assignments-2c9df",
   storageBucket: "cprg306-assignments-2c9df.firebasestorage.app",
