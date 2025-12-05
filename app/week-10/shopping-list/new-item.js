@@ -22,11 +22,7 @@ export default function NewItem({ onAddItem }) {
       quantity,
       category,
     };
-
-    if (typeof onAddItem === "function") {  
-      onAddItem(item);
-    }
-
+    onAddItem(item);
     setName("");
     setQuantity(1);
     setCategory("produce");
